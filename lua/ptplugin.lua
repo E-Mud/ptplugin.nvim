@@ -30,13 +30,26 @@ local opts = vim.deepcopy(default_opts)
 ---@type { [string]: string[] }
 local cached_project_types = {}
 
+---@param file_path string
+---@return boolean
+local function file_exists(file_path)
+  return fn.glob(file_path) ~= ""
+end
+
 ---@param bufnr integer
+---@param root_markers string[]
 ---@return string?
-local function get_project_path(bufnr)
-  local path = fs.find(opts.root_markers, {
+local function project_path_from_root_markers(bufnr, root_markers)
+  local buf_file_path = api.nvim_buf_get_name(bufnr)
+
+  if not file_exists(buf_file_path) then
+    return nil
+  end
+
+  local path = fs.find(root_markers, {
     upward = true,
     stop = vim.loop.os_homedir(),
-    path = fs.dirname(vim.api.nvim_buf_get_name(bufnr)),
+    path = fs.dirname(buf_file_path),
   })[1]
 
   if path == nil then
@@ -44,6 +57,18 @@ local function get_project_path(bufnr)
   end
 
   return fs.dirname(path)
+end
+
+---@param bufnr integer
+---@return string?
+local function get_project_path(bufnr)
+  local project_path = project_path_from_root_markers(bufnr, opts.root_markers)
+
+  if project_path == nil then
+    project_path = vim.fn.getcwd()
+  end
+
+  return project_path
 end
 
 ---@param project_path string
@@ -75,6 +100,8 @@ local function handle_buffer_open(ev)
   if project_path == nil then
     return
   end
+
+  vim.b[bufnr].project_path = project_path
 
   local project_types = get_project_types(project_path)
 
