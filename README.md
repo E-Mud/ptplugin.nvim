@@ -9,24 +9,31 @@ This Neovim plugin automatically detects project types and loads project-specifi
 
 ## 🚀 How It Works
 
-1. **Project Detection**: When a buffer is opened, searches upward from the file's directory to find project root markers
+1. **Project Detection**: When a buffer is opened, searches upward from the file's directory to find project root markers. The project path is added to `project_path` buffer variable for inspection.
 
-2. **Type Extraction**: Extracts the project type from the root directory name (e.g., `/path/to/my-react-app/` → `"my-react-app"`)
+2. **Type Extraction**: Extracts the project types based on dynamic extractor. By default it just uses the root directory name (e.g., `/path/to/my-react-app/` → `"my-react-app"`). This only happens once per project.
 
 3. **Runtime Loading**: Automatically loads project-specific files from these patterns:
    - `ptplugin/{type}.{vim,lua}`
    - `ptplugin/{type}_*.{vim,lua}`
    - `ptplugin/{type}/*.{vim,lua}`
 
-4. **Buffer Variables**: Sets `vim.b.projecttypes` on each buffer with the detected project types
+   This step runs for every project type **in the same order** as returned by type extraction.
+
+4. **Buffer Variables**: Sets `projecttypes` buffer variable on each buffer with the detected project types
 
 ## 📁 File Organization
 
 For a project named "django-blog", the plugin will load:
-- `~/.config/nvim/ptplugin/django-blog.lua`
-- `~/.config/nvim/ptplugin/django-blog_settings.vim`  
-- `~/.config/nvim/ptplugin/django-blog/keymaps.lua`
-- `~/.config/nvim/ptplugin/django-blog/autocmds.lua`
+- `<runtimepath>/ptplugin/django-blog.lua`
+- `<runtimepath>/ptplugin/django-blog_settings.vim`  
+- `<runtimepath>/ptplugin/django-blog/keymaps.lua`
+- `<runtimepath>/ptplugin/django-blog/autocmds.lua`
+
+See `:h runtimepath` for more information about your runtimepath location, but in most cases we're talking about the directory where you have your neovim config:
+```bash
+:echo stdpath("config")
+```
 
 ## 💡 Example Use Cases
 
