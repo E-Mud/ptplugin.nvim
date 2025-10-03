@@ -1,0 +1,5 @@
+describe('Test example', function()
+  it('Test can access vim namespace', function()
+    assert(vim.trim('  a ') == 'a')
+  end)
+end)

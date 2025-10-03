@@ -1,0 +1,12 @@
+{
+  "runtime": {
+    "verion": "Lua 5.1",
+  },
+  "diagnostics": {
+    "globals": [
+      "vim",
+      "describe",
+      "it"
+    ]
+  }
+}
