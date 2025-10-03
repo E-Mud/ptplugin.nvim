@@ -9,7 +9,7 @@ This Neovim plugin automatically detects project types and loads project-specifi
 
 ## 🚀 How It Works
 
-1. **Project Detection**: When a buffer is opened, searches upward from the file's directory to find project root markers. The project path is added to `project_path` buffer variable for inspection.
+1. **Project Detection**: When a buffer is opened, searches upward from the file's directory to find project root markers. The project path is added to `project_path` buffer variable for inspection. If not root directory is found, it will fallback to `cwd`.
 
 2. **Type Extraction**: Extracts the project types based on dynamic extractor. By default it just uses the root directory name (e.g., `/path/to/my-react-app/` → `"my-react-app"`). This only happens once per project.
 
@@ -83,9 +83,9 @@ require('ptplugin').setup()
 ```lua
 require('ptplugin').setup({
   root_markers = { '.git' },
-  extractor = function(root_dir)
-    return vim.fn.fnamemodify(root_dir, ':t')
-  end
+  extractor = {
+    require('ptplugin.extractors').dir_name, -- takes the name of the root directory
+  }
 })
 ```
 
@@ -94,26 +94,22 @@ require('ptplugin').setup({
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
 | `root_markers` | `string[]` | `{ '.git' }` | Files/directories that indicate project root |
-| `extractor` | `function` | `default_extractor` | Function to extract project type from root directory path |
+| `extractor` | `function[]` | `{ default_extractor }` | List of functions to extract project type from root directory path. Each function is extractor must return a table with all the extracted project types. All the results are concatenated into one list, removing duplicates. |
+
 
 ### Custom Configuration Examples
 
-#### Multiple Root Markers
 
 ```lua
 require('ptplugin').setup({
-  root_markers = { '.git', 'package.json', 'Cargo.toml', 'pyproject.toml' }
-})
-```
-
-#### Custom Project Type Extractor
-
-```lua
-require('ptplugin').setup({
-  extractor = function(root_dir)
-    -- Use the last two directory components
-    local parts = vim.split(root_dir, '/')
-    return table.concat({ parts[#parts-1], parts[#parts] }, '-')
-  end
+  root_markers = { '.git', 'package.json', 'Cargo.toml', 'pyproject.toml' },
+  extractor = {
+    require('ptplugin.extractors').dir_name,
+    function(root_dir)
+      -- Use the last two directory components
+      local parts = vim.split(root_dir, '/')
+      return { table.concat({ parts[#parts-1], parts[#parts] }, '-') }
+    end
+  }
 })
 ```
