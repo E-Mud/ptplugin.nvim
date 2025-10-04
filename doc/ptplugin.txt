@@ -1,4 +1,4 @@
-*ptplugin-docs.txt*      For Neovim >= 0.8.0      Last change: 2025 October 04
+*ptplugin.nvim*      For Neovim >= 0.8.0      Last change: 2025 October 04
 
 ==============================================================================
 Table of Contents                            *ptplugin-docs-table-of-contents*

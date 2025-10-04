@@ -1,4 +1,4 @@
-# ptplugin.nvim
+# Intro
 
 Like `ftplugin`, but for projects.
 
@@ -7,7 +7,7 @@ Like `ftplugin`, but for projects.
 
 This Neovim plugin automatically detects project types and loads project-specific configuration files based on the project's root directory. 
 
-## 🚀 How It Works
+# 🚀 How It Works
 
 1. **Project Detection**: When a buffer is opened, searches upward from the file's directory to find project root markers. The project path is added to `project_path` buffer variable for inspection. If not root directory is found, it will fallback to `cwd`.
 
@@ -22,9 +22,10 @@ This Neovim plugin automatically detects project types and loads project-specifi
 
 4. **Buffer Variables**: Sets `projecttypes` buffer variable on each buffer with the detected project types
 
-## 📁 File Organization
+# 📁 File Organization
 
 For a project named "django-blog", the plugin will load:
+
 - `<runtimepath>/ptplugin/django-blog.lua`
 - `<runtimepath>/ptplugin/django-blog_settings.vim`  
 - `<runtimepath>/ptplugin/django-blog/keymaps.lua`
@@ -35,14 +36,14 @@ See `:h runtimepath` for more information about your runtimepath location, but i
 :echo stdpath("config")
 ```
 
-## 💡 Example Use Cases
+# 💡 Example Use Cases
 
 - **Framework-specific settings**: Load React, Rails, or Laravel configurations automatically
 - **Project keymaps**: Define project-specific key bindings
 - **Tool integration**: Automatically configure LSP, linters, or formatters per project
 - **Environment setup**: Load different settings for work vs personal projects
 
-## 📦 Installation
+# 📦 Installation
 
 ### [lazy.nvim](https://github.com/folke/lazy.nvim)
 
@@ -76,7 +77,7 @@ Plug 'e-mud/ptplugin.nvim'
 require('ptplugin').setup()
 ```
 
-## ⚙️ Configuration
+# ⚙️ Configuration
 
 ### Default Configuration
 
