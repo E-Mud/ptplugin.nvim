@@ -1,17 +1,17 @@
-*ptplugin.nvim*      For Neovim >= 0.8.0      Last change: 2025 October 04
+*ptplugin.txt*         For Neovim >= 0.8.0        Last change: 2025 October 04
 
 ==============================================================================
-Table of Contents                            *ptplugin-docs-table-of-contents*
+Table of Contents                                 *ptplugin-table-of-contents*
 
-1. ptplugin.nvim                                 |ptplugin-docs-ptplugin.nvim|
-  - How It Works                    |ptplugin-docs-ptplugin.nvim-how-it-works|
-  - File Organization          |ptplugin-docs-ptplugin.nvim-file-organization|
-  - Example Use Cases          |ptplugin-docs-ptplugin.nvim-example-use-cases|
-  - Installation                    |ptplugin-docs-ptplugin.nvim-installation|
-  - Configuration                  |ptplugin-docs-ptplugin.nvim-configuration|
+1. Intro                                                      |ptplugin-intro|
+2. How It Works                                        |ptplugin-how-it-works|
+3. File Organization                              |ptplugin-file-organization|
+4. Example Use Cases                              |ptplugin-example-use-cases|
+5. Installation                                        |ptplugin-installation|
+6. Configuration                                      |ptplugin-configuration|
 
 ==============================================================================
-1. ptplugin.nvim                                 *ptplugin-docs-ptplugin.nvim*
+1. Intro                                                      *ptplugin-intro*
 
 Like `ftplugin`, but for projects.
 
@@ -22,7 +22,8 @@ This Neovim plugin automatically detects project types and loads
 project-specific configuration files based on the project’s root directory.
 
 
-HOW IT WORKS                        *ptplugin-docs-ptplugin.nvim-how-it-works*
+==============================================================================
+2. How It Works                                        *ptplugin-how-it-works*
 
 1. **Project Detection**: When a buffer is opened, searches upward from the
 file’s directory to find project root markers. The project path is added to
@@ -52,13 +53,15 @@ the detected project types
 
 
 
-FILE ORGANIZATION              *ptplugin-docs-ptplugin.nvim-file-organization*
+==============================================================================
+3. File Organization                              *ptplugin-file-organization*
 
-For a project named "django-blog", the plugin will load: -
-`<runtimepath>/ptplugin/django-blog.lua` -
-`<runtimepath>/ptplugin/django-blog_settings.vim` -
-`<runtimepath>/ptplugin/django-blog/keymaps.lua` -
-`<runtimepath>/ptplugin/django-blog/autocmds.lua`
+For a project named "django-blog", the plugin will load:
+
+- `<runtimepath>/ptplugin/django-blog.lua`
+- `<runtimepath>/ptplugin/django-blog_settings.vim`
+- `<runtimepath>/ptplugin/django-blog/keymaps.lua`
+- `<runtimepath>/ptplugin/django-blog/autocmds.lua`
 
 See |runtimepath| for more information about your runtimepath location, but in
 most cases we’re talking about the directory where you have your neovim
@@ -69,7 +72,8 @@ config:
 <
 
 
-EXAMPLE USE CASES              *ptplugin-docs-ptplugin.nvim-example-use-cases*
+==============================================================================
+4. Example Use Cases                              *ptplugin-example-use-cases*
 
 - **Framework-specific settings**: Load React, Rails, or Laravel configurations automatically
 - **Project keymaps**: Define project-specific key bindings
@@ -77,7 +81,8 @@ EXAMPLE USE CASES              *ptplugin-docs-ptplugin.nvim-example-use-cases*
 - **Environment setup**: Load different settings for work vs personal projects
 
 
-INSTALLATION                        *ptplugin-docs-ptplugin.nvim-installation*
+==============================================================================
+5. Installation                                        *ptplugin-installation*
 
 
 LAZY.NVIM ~
@@ -115,7 +120,8 @@ VIM-PLUG ~
 <
 
 
-CONFIGURATION                      *ptplugin-docs-ptplugin.nvim-configuration*
+==============================================================================
+6. Configuration                                      *ptplugin-configuration*
 
 
 DEFAULT CONFIGURATION ~
